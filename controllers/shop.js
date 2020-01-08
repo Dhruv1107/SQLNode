@@ -86,8 +86,8 @@ exports.postCart = (req, res, next) => {
         product = products[0];
       }
 
-      if (product) {
-        const oldQuantity = product.cartItem.quantity;
+      if (product) { //If a product is available update the quantity by 1
+        const oldQuantity = product.cartItem.quantity; //Sequilize gives access to in-between table(cartItem) through product and cart tables
         newQuantity = oldQuantity + 1;
         return product;
       }
@@ -95,7 +95,7 @@ exports.postCart = (req, res, next) => {
     })
     .then(product => {
       return fetchedCart.addProduct(product, {
-        through: { quantity: newQuantity }
+        through: { quantity: newQuantity }  //set the quantity of cart-item table
       });
     })
     .then(() => {
@@ -113,7 +113,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .then(products => {
       const product = products[0];
-      return product.cartItem.destroy();
+      return product.cartItem.destroy(); // delete the product only in cart-item table
     })
     .then(result => {
       res.redirect('/cart');

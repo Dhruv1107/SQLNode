@@ -8,7 +8,7 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-//region
+
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
@@ -19,7 +19,8 @@ exports.postAddProduct = (req, res, next) => {
     title: title,
       price: price,
       imageUrl: imageUrl,
-      description: description
+      description: description,
+      userId:req.user.id
   })
   .then(result => {
       // console.log(result);
